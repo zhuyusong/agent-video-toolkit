@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-video-toolkit"
+version = "0.1.0"
+description = "Local, model-free video execution for agent hosts"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY.md"]
+authors = [{name = "Agent Video Toolkit contributors"}]
+dependencies = ["mcp==1.26.0", "playwright==1.58.0", "Pillow==12.1.0", "portalocker==3.2.0"]
+
+[project.optional-dependencies]
+dev = ["pytest==9.0.2", "build==1.4.0"]
+
+[project.scripts]
+avt = "agent_video.cli:main"
+avt-mcp = "agent_video.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+agent_video = ["*.js"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: runs actual FFmpeg and Chromium"]
