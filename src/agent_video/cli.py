@@ -10,6 +10,10 @@ from .storage import InputError, read_json
 
 
 def main():
+    # PowerShell pipes expect UTF-8 even when Windows' legacy code page differs.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Agent Video Toolkit — local, model-free execution")
     parser.add_argument("--root", type=Path, default=Path("runtime"), help="Dedicated runtime (never share Studio runtime)")
     sub = parser.add_subparsers(dest="command", required=True)
